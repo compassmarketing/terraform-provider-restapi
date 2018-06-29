@@ -9,3 +9,5 @@ crash.log
 **/github_api_token
 **/release_info.md
 scripts/terraform-provider-restapi*
+terraform-provider-restapi.darwin.amd64
+terraform-provider-restapi.linux.amd64

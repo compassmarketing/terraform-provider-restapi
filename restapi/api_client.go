@@ -10,6 +10,7 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"os"
 	"strings"
 	"time"
 )
@@ -129,9 +130,12 @@ func (client *api_client) send_request(method string, path string, data string) 
 		log.Printf("%s\n", body)
 	}
 
+	/* Add drench-specific account header */
+	req.Header.Set("x-drench-account", os.Getenv("DRENCH_ACCOUNT"))
+
 	/* Sign request for aws api gateway */
 	_, err = v4.NewSigner(credentials.NewSharedCredentials("", "")).Sign( // searches default paths when passed empty strings
-		req, buffer, "apigateway", "us-east-1", time.Now()) //FIXME make region and service dynamic
+		req, buffer, "execute-api", "us-east-1", time.Now()) //FIXME make region and service dynamic
 	if err != nil {
 		return "", err
 	}
